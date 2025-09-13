@@ -7,8 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons"></script>
-    <!-- Contentful JavaScript SDK -->
-    <script src="https://unpkg.com/contentful@latest/dist/contentful.browser.min.js"></script>
     <style>
         /* Custom styles for a charming feel */
         body {
@@ -248,31 +246,25 @@
         });
 
 
-        // --- Dynamic Contentful Logic ---
+        // --- Dynamic Contentful Logic (using Netlify Functions) ---
         document.addEventListener('DOMContentLoaded', () => {
-            // === STEP 1: ADD YOUR CONTENTFUL KEYS HERE ===
-            // Replace these empty strings with your actual keys from Contentful.
-            // This is safe because the Content Delivery API key is read-only.
-            const SPACE_ID = 'it0p6qjutz5q';
-            const ACCESS_TOKEN = 'lIQtQ_3eW1OQhqGmkJcY5hTOYza7gosDQOi2IFgwxZM';
-            // ===============================================
-
             const productGrid = document.getElementById('product-grid');
             const loadingState = document.getElementById('loading-state');
             
-            // Initialize Contentful client
-            const client = contentful.createClient({
-                space: SPACE_ID,
-                accessToken: ACCESS_TOKEN
-            });
+            // This is the endpoint for our Netlify function.
+            const apiEndpoint = '/.netlify/functions/getProducts';
 
-            // Fetch products from Contentful
-            client.getEntries({ content_type: 'product' })
-                .then((response) => {
+            fetch(apiEndpoint)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(products => {
                     loadingState.style.display = 'none'; // Hide loading spinner
-                    const products = response.items;
 
-                    if (!products.length) {
+                    if (!products || !products.length) {
                         productGrid.innerHTML = '<p class="col-span-full text-center text-warm-gray-600">No treasures found yet. Check back soon!</p>';
                         return;
                     }
@@ -300,9 +292,9 @@
                     initializeLoadMore();
                 })
                 .catch(error => {
-                    console.error('Error fetching products from Contentful:', error);
+                    console.error('Error fetching products via Netlify Function:', error);
                     loadingState.style.display = 'none';
-                    productGrid.innerHTML = '<p class="col-span-full text-center text-red-500">Could not load treasures. Please check your API keys or try again later.</p>';
+                    productGrid.innerHTML = '<p class="col-span-full text-center text-red-500">Could not load treasures. Please try again later.</p>';
                 });
         });
 
