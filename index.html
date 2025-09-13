@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiZhen - A Pocketful of Delight</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        /* Custom styles for a charming feel */
+        body {
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .btn-primary {
+            /* Custom styles for a bubbly, 3D button */
+            background-color: #D87D4A; /* terracotta-500 */
+            color: white;
+            font-weight: 800; /* extrabold */
+            padding: 1rem 2rem; /* larger padding */
+            font-size: 1.125rem; /* larger font */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 5px 0px #b56539; /* Darker terracotta for 3D effect */
+            transition: all 0.15s ease-in-out;
+            display: inline-block;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0px #b56539;
+        }
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #b56539;
+        }
+        
+        .btn-secondary-bubbly {
+            /* Custom styles for a bubbly, 3D button - secondary color */
+            background-color: #A3B899; /* sage-green-500 */
+            color: white;
+            font-weight: 800; /* extrabold */
+            padding: 1rem 2rem; /* larger padding */
+            font-size: 1.125rem; /* larger font */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 5px 0px #82947a; /* Darker sage-green for 3D effect */
+            transition: all 0.15s ease-in-out;
+            display: inline-block;
+        }
+        .btn-secondary-bubbly:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0px #82947a;
+        }
+        .btn-secondary-bubbly:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #82947a;
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 640px) {
+            /* Smaller bubbly buttons on mobile */
+            .btn-primary, .btn-secondary-bubbly {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            /* Adjust padding for product card buttons */
+            .product-item .btn-primary {
+                 padding: 0.5rem 1rem;
+                 font-size: 0.875rem;
+            }
+        }
+    </style>
+    <script>
+        // Customizing Tailwind CSS with our professional and playful color palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'peach-puff-100': '#FFF0E5', // A warm, inviting off-white
+                        'terracotta-500': '#D87D4A',  // A confident, earthy accent
+                        'sage-green-500': '#A3B899',
+                        'warm-gray-800': '#4C4C4C',
+                        'warm-gray-600': '#7a7a7a',
+                    },
+                    fontFamily: {
+                        'sans': ['Nunito', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-peach-puff-100 text-warm-gray-800">
+
+    <!-- Header -->
+    <header class="sticky top-0 bg-peach-puff-100 bg-opacity-90 backdrop-blur-sm z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl sm:text-3xl font-extrabold text-warm-gray-800">MiZhen</a>
+            <nav class="hidden md:flex items-center space-x-2">
+                <a href="#home" class="px-4 py-2 rounded-full transition-all duration-300 ease-in-out hover:bg-terracotta-500 hover:text-white hover:-translate-y-1 hover:shadow-lg">Home</a>
+                <a href="#shop" class="px-4 py-2 rounded-full transition-all duration-300 ease-in-out hover:bg-terracotta-500 hover:text-white hover:-translate-y-1 hover:shadow-lg">Products</a>
+                <a href="#about" class="px-4 py-2 rounded-full transition-all duration-300 ease-in-out hover:bg-terracotta-500 hover:text-white hover:-translate-y-1 hover:shadow-lg">About</a>
+                <a href="#how-to-order" class="px-4 py-2 rounded-full transition-all duration-300 ease-in-out hover:bg-terracotta-500 hover:text-white hover:-translate-y-1 hover:shadow-lg">How to Order</a>
+            </nav>
+            <div class="flex items-center">
+                 <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="hidden md:block text-warm-gray-600 hover:text-terracotta-500 transition-colors">
+                    <i data-feather="instagram" class="w-6 h-6"></i>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden ml-4">
+                    <i data-feather="menu"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#home" class="block py-2 text-center hover:bg-terracotta-500 hover:text-white rounded-md">Home</a>
+            <a href="#shop" class="block py-2 text-center hover:bg-terracotta-500 hover:text-white rounded-md">Products</a>
+            <a href="#about" class="block py-2 text-center hover:bg-terracotta-500 hover:text-white rounded-md">About</a>
+            <a href="#how-to-order" class="block py-2 text-center hover:bg-terracotta-500 hover:text-white rounded-md">How to Order</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="container mx-auto px-6 py-16 md:py-28 overflow-hidden">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-4">Small Treasures, Big Smiles.</h1>
+                    <p class="text-lg text-warm-gray-600 max-w-xl mx-auto md:mx-0 mb-8">Welcome to our curated collection of charming decor. Explore our world and find the perfect little something to brighten your space.</p>
+                    <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary inline-block">Order on Instagram</a>
+                </div>
+                <div class="md:w-1/2 mt-8 md:mt-0 flex items-center justify-center">
+                    <!-- Treasure Collage Container -->
+                    <div class="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96">
+                        <!-- Main background circle -->
+                        <div class="absolute inset-0 bg-sage-green-500 rounded-full shadow-2xl"></div>
+                        
+                        <!-- Collage Images (Responsive) -->
+                        <img src="https://placehold.co/200x200/D87D4A/FFF0E5?text=Item+1" alt="Cute decor item 1" class="absolute top-2 left-4 w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-full shadow-lg border-4 border-white transform rotate-12 transition-transform hover:scale-110">
+                        <img src="https://placehold.co/200x200/FFF0E5/4C4C4C?text=Item+2" alt="Cute decor item 2" class="absolute bottom-4 right-0 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-2xl shadow-lg border-4 border-white transform -rotate-12 transition-transform hover:scale-110 z-10">
+                        <img src="https://placehold.co/200x200/D87D4A/FFF0E5?text=Item+3" alt="Cute decor item 3" class="absolute bottom-0 left-0 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 rounded-lg shadow-lg border-4 border-white transform rotate-6 transition-transform hover:scale-110">
+                        <img src="https://placehold.co/200x200/A3B899/FFF0E5?text=Item+4" alt="Cute decor item 4" class="absolute top-8 right-8 w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full shadow-lg border-4 border-white transform rotate-3 transition-transform hover:scale-110">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section id="shop" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl font-bold text-center mb-4">Our Curated Collection</h2>
+                <p class="text-center text-warm-gray-600 mb-12">Each piece is chosen to bring a little bit of joy to your home. Find your new favorite!</p>
+                
+                <!-- Product Grid -->
+                <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product Card 1 -->
+                    <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/D87D4A/FFF0E5?text=Mushroom+Magnet" alt="Cute Mushroom Magnet" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Whimsical Mushroom Magnet</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">A tiny touch of enchanted forest for your fridge.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳150</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    <!-- Product Card 2 -->
+                    <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/A3B899/FFF0E5?text=Scooter+Model" alt="Vintage Scooter Model" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Vintage Scooter Miniature</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">A classic piece of decor for your desk or shelf.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳450</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    <!-- Product Card 3 -->
+                     <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/D87D4A/FFF0E5?text=Curtain+Tie" alt="Leaf Curtain Tie" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Boho Leaf Curtain Tie-back</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">Add a natural, elegant touch to your curtains.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳300</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    <!-- Product Card 4 -->
+                     <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/A3B899/FFF0E5?text=Fruit+Basket" alt="Fruit Basket Magnet" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Farmer's Market Basket</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">A vibrant and cheerful magnet for your kitchen notes.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳200</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    
+                    <!-- More products to be loaded -->
+                    <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/D87D4A/FFF0E5?text=Coffee+Cup" alt="Coffee Cup Magnet" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Morning Coffee Cup Magnet</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">For the love of coffee, a perfect little reminder.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳150</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/A3B899/FFF0E5?text=Bread+Loaf" alt="Bread Loaf Magnet" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Artisanal Bread Loaf</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">A slice of bakery charm for your kitchen notes.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳180</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/D87D4A/FFF0E5?text=Flower+Pot" alt="Flower Pot Decor" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Sunny Sunflower Pot</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">A little pot of sunshine to brighten any corner.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳350</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                    <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+                        <img src="https://placehold.co/400x400/A3B899/FFF0E5?text=Cassette" alt="Cassette Tape Magnet" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Retro Cassette Tape</h3>
+                            <p class="text-warm-gray-600 text-base flex-grow">A nostalgic nod to the mixtape era for your fridge.</p>
+                            <p class="text-2xl font-extrabold mt-4 mb-4">৳220</p>
+                            <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary mt-auto text-center">Order on Instagram</a>
+                        </div>
+                    </div>
+                     <!-- Add up to 50+ products here with the "product-item" class -->
+                </div>
+
+                <!-- Load More Button -->
+                <div id="load-more-container" class="text-center mt-12">
+                    <button id="load-more-btn" class="btn-primary">
+                        <span id="load-more-text" class="inline-flex items-center space-x-2">
+                            <span>Load More</span>
+                            <i data-feather="chevrons-down" class="w-5 h-5"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container mx-auto px-6 py-20">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <img src="https://placehold.co/600x400/D87D4A/FFF0E5?text=Our+World" alt="Artisanal decor items arranged beautifully" class="rounded-2xl shadow-xl">
+                </div>
+                <div class="md:w-1/2 text-center md:text-left">
+                    <h2 class="text-3xl font-bold mb-4">Welcome to Our World!</h2>
+                    <p class="text-warm-gray-600 text-lg leading- relaxed">MiZhen started with a simple idea: that the little things in our homes can bring the most joy. We search for unique, beautifully crafted decor that tells a story and makes a space feel truly personal. Each item in our collection is a treasure we're excited to share with you.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How to Order Section -->
+        <section id="how-to-order" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-bold mb-4">Ready to Order?</h2>
+                <p class="text-warm-gray-600 text-lg mb-8 max-w-2xl mx-auto">We keep things simple! We handle all our orders directly through our social media pages. Just send us a message with a screenshot of the item you love!</p>
+                <div class="flex justify-center items-center flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="https://www.instagram.com/_mi_zhen" target="_blank" class="btn-primary inline-flex items-center space-x-2">
+                        <i data-feather="instagram"></i>
+                        <span>Message on Instagram</span>
+                    </a>
+                    <a href="#" target="_blank" class="btn-secondary-bubbly inline-flex items-center space-x-2">
+                         <i data-feather="facebook"></i>
+                        <span>Message on Facebook</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-peach-puff-100 py-8">
+        <div class="container mx-auto px-6 text-center text-warm-gray-600">
+            <p>&copy; 2025 MiZhen. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Curating joy, one small treasure at a time.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Feather Icons
+        feather.replace();
+
+        // --- Mobile Menu Logic ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+        // Toggle menu when hamburger icon is clicked
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Hide menu when a link inside it is clicked
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // "Load More" / "Show Less" Products Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const productItems = document.querySelectorAll('.product-item');
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            const loadMoreText = document.getElementById('load-more-text');
+            
+            const initialItems = 4;
+            const itemsPerLoad = 4;
+            let visibleItems = initialItems;
+            let allLoaded = false;
+
+            // Initially hide all items that are not in the first batch
+            productItems.forEach((item, index) => {
+                if (index >= initialItems) {
+                    item.style.display = 'none';
+                }
+            });
+
+            // If there are not enough products to need a "load more" button, hide it.
+            if (productItems.length <= initialItems) {
+                loadMoreContainer.style.display = 'none';
+                return;
+            }
+
+            loadMoreBtn.addEventListener('click', () => {
+                if (allLoaded) {
+                    // --- SHOW LESS LOGIC ---
+                    productItems.forEach((item, index) => {
+                        if (index >= initialItems) {
+                            item.style.display = 'none';
+                        }
+                    });
+                    visibleItems = initialItems;
+                    allLoaded = false;
+                    loadMoreText.innerHTML = `<span>Load More</span><i data-feather="chevrons-down" class="w-5 h-5"></i>`;
+                    feather.replace(); // Re-render icons
+
+                } else {
+                    // --- LOAD MORE LOGIC ---
+                    const nextVisibleItems = visibleItems + itemsPerLoad;
+                    for (let i = visibleItems; i < nextVisibleItems && i < productItems.length; i++) {
+                        productItems[i].style.display = 'flex';
+                    }
+                    visibleItems = nextVisibleItems;
+
+                    // Check if all items are now visible
+                    if (visibleItems >= productItems.length) {
+                        allLoaded = true;
+                        loadMoreText.innerHTML = `<span>Show Less</span><i data-feather="chevrons-up" class="w-5 h-5"></i>`;
+                        feather.replace(); // Re-render icons
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
