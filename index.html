@@ -251,13 +251,16 @@
             const productGrid = document.getElementById('product-grid');
             const loadingState = document.getElementById('loading-state');
             
-            // This is the endpoint for our Netlify function.
+            // This is the endpoint for our Netlify function. It's a special address that Netlify provides.
             const apiEndpoint = '/.netlify/functions/getProducts';
 
             fetch(apiEndpoint)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        // If the server responds with an error, we can read the message from it
+                        return response.json().then(errorBody => {
+                           throw new Error(`Function error: ${errorBody.error}`);
+                        });
                     }
                     return response.json();
                 })
@@ -271,12 +274,13 @@
                     
                     // Generate HTML for each product and add it to the grid
                     products.forEach(product => {
-                        const { productName, productImage, price, shortDescription } = product.fields;
-                        const imageUrl = productImage?.fields?.file?.url;
+                        // This structure now matches the GraphQL query response
+                        const { productName, price, shortDescription, productImage } = product;
+                        const imageUrl = productImage?.url;
                         
                         const productCardHTML = `
                             <div class="product-item bg-peach-puff-100 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 flex flex-col">
-                                <img src="${imageUrl ? 'https:' + imageUrl + '?w=400&h=400&fit=fill' : 'https://placehold.co/400x400/D87D4A/FFF0E5?text=No+Image'}" alt="${productName || 'Product Image'}" class="w-full h-56 object-cover">
+                                <img src="${imageUrl || 'https://placehold.co/400x400/D87D4A/FFF0E5?text=No+Image'}" alt="${productName || 'Product Image'}" class="w-full h-56 object-cover">
                                 <div class="p-6 flex flex-col flex-grow">
                                     <h3 class="font-bold text-xl mb-2">${productName || 'Untitled Product'}</h3>
                                     <p class="text-warm-gray-600 text-base flex-grow">${shortDescription || ''}</p>
@@ -294,7 +298,7 @@
                 .catch(error => {
                     console.error('Error fetching products via Netlify Function:', error);
                     loadingState.style.display = 'none';
-                    productGrid.innerHTML = '<p class="col-span-full text-center text-red-500">Could not load treasures. Please try again later.</p>';
+                    productGrid.innerHTML = '<p class="col-span-full text-center text-red-500">Could not load treasures. Please check your API keys and Netlify function logs.</p>';
                 });
         });
 
