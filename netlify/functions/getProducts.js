@@ -1,18 +1,17 @@
-// This is the final, improved Netlify Function.
-// It has zero dependencies and uses a direct API call for reliability.
+// This is the final, updated Netlify Function.
+// It fetches BOTH the products AND the hero images from your Site Settings.
 
 exports.handler = async function(event, context) {
   // Securely get your secret keys from the Netlify environment
   const { CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN } = process.env;
 
-  // The endpoint for Contentful's GraphQL API
   const apiEndpoint = `https://graphql.contentful.com/content/v1/spaces/${CONTENTFUL_SPACE_ID}`;
 
-  // This is a GraphQL query to get all your product data
+  // This GraphQL query now asks for two things: the product collection AND the site settings collection.
   const graphqlQuery = {
     query: `
       query {
-        productCollection {
+        productCollection(order: sys_publishedAt_DESC) {
           items {
             sys { id }
             productName
@@ -23,12 +22,20 @@ exports.handler = async function(event, context) {
             }
           }
         }
+        siteSettingsCollection(limit: 1) {
+          items {
+            heroImagesCollection {
+              items {
+                url(transform: {width: 200, height: 200, quality: 85, format: JPG})
+              }
+            }
+          }
+        }
       }
     `
   };
 
   try {
-    // Use the built-in 'fetch' to make a secure request to Contentful's API
     const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
@@ -43,12 +50,16 @@ exports.handler = async function(event, context) {
     }
     
     const data = await response.json();
-    const products = data.data.productCollection.items;
+    
+    // We now structure the response to send both pieces of data back to the website.
+    const responseData = {
+        products: data.data.productCollection.items,
+        siteSettings: data.data.siteSettingsCollection.items[0] || {}
+    };
 
-    // Send the list of products back to the website successfully
     return {
       statusCode: 200,
-      body: JSON.stringify(products),
+      body: JSON.stringify(responseData),
     };
 
   } catch (error) {
